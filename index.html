@@ -94,10 +94,45 @@
 
   <script>
     const runners = [
-      { name:'India', back:[1.84,1.83,1.82], lay:[1.86,1.88,1.90] },
-      { name:'Pakistan', back:[2.10,2.08,2.06], lay:[2.14,2.16,2.18] },
-      { name:'Draw', back:[8.00,7.80,7.60], lay:[8.40,8.60,8.80] },
-    ];
+      <script>
+// Global list so existing functions work
+let runners = [];
+
+async function loadData(){
+  try{
+    const res = await fetch('data/matches.json', { cache: 'no-store' });
+    const matches = await res.json();
+
+    // Abhi simple: pehla match dikhao
+    const m = matches[0];
+
+    // Convert JSON -> runners format jo tumhari renderRunners() expect karti hai
+    runners = m.markets["Match Odds"].map(r => ({
+      name: r.runner, back: r.back, lay: r.lay
+    }));
+
+    // Heading/meta update
+    const h2s = document.querySelectorAll('.event h2');
+    const metas = document.querySelectorAll('.event .meta');
+    if(h2s[0]) h2s[0].textContent = `${m.match} — Match Odds`;
+    if(metas[0]){
+      const t = new Date(m.start);
+      const time = t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      metas[0].textContent = `${m.sport} • Starts ${time} • In-Play available`;
+    }
+
+    // Table render (tumhari existing function)
+    renderRunners(runners);
+  }catch(err){
+    console.error('Error loading matches.json', err);
+  }
+}
+
+// First load + auto refresh
+loadData();
+setInterval(loadData, 10000);
+</script>
+
 
     const runnerRows = document.getElementById('runnerRows');
     const betsEl = document.getElementById('bets');
