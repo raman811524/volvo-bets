@@ -1,8 +1,7 @@
-:root{
-  --bg:#0b101a; --surface:#0f1625; --border:#1e2a3a; --muted:#98a4b3;
-  --brand:#2F6CF6;      /* logo blue */
-  --back:#2F6CF6;       /* Back boxes blue */
-  --lay:#FFA31A;        /* Lay boxes orange */
+--brand: #2F6CF6;
+--back:  #2F6CF6;
+--lay:   #FFA31A;
+
 }
 :root{
   --bg:#0b101a; --surface:#0f1625; --border:#1e2a3a; --muted:#98a4b3;
@@ -61,5 +60,14 @@ footer{padding:28px 14px;border-top:1px solid var(--border);color:#94a3b8;font-s
   --brand:#2F6CF6;      /* logo blue */
   --back:#2F6CF6;       /* Back boxes blue */
   --lay:#FFA31A;        /* Lay boxes orange */
+:root {
+  --bg:#0b101a;
+  --surface:#0f1625;
+  --border:#1e2a3a;
+  --muted:#98a4b3;
+  --brand:#2F6CF6;
+  --back:#2F6CF6;
+  --lay:#FFA31A;
+} /* Ye closing curly brace hai */
 }
 
