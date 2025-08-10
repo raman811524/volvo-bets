@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Header / Nav -->
   <header>
     <div class="container top">
       <div class="brand">
@@ -28,7 +29,9 @@
     </div>
   </header>
 
+  <!-- Layout -->
   <div class="container layout">
+    <!-- Sidebar -->
     <aside class="panel sidebar">
       <h3>Sports</h3>
       <nav class="menu">
@@ -44,14 +47,15 @@
       </div>
     </aside>
 
+    <!-- Center: Market View -->
     <main class="panel markets">
       <div class="searchbar">
         <input type="search" placeholder="Search events or teams…" oninput="filterEvents(this.value)">
       </div>
 
       <section class="event">
-        <h2>India vs Pakistan — Match Odds</h2>
-        <div class="meta">Cricket • Starts 19:30 • In‑Play available</div>
+        <h2 id="matchTitle">Loading…</h2>
+        <div class="meta" id="matchMeta">Fetching data…</div>
       </section>
 
       <section class="event" style="padding-top:0">
@@ -73,16 +77,20 @@
       </section>
     </main>
 
+    <!-- Right: Betslip -->
     <aside class="panel betslip">
       <h3>Bet Slip</h3>
       <div id="bets"></div>
       <div class="total"><span>Total Stake</span><strong id="stakeTotal">0</strong></div>
       <div class="total"><span>Potential Return</span><strong id="retTotal">0</strong></div>
       <button class="btn primary" onclick="placeAll()">Place Bets (Demo)</button>
-      <p style="color:var(--muted);font-size:12px">Demo UI with virtual coins. Real‑money systems require licensing, KYC, and compliance.</p>
+      <p style="color:var(--muted);font-size:12px">
+        Demo UI with virtual coins. Real-money systems require licensing, KYC, and compliance.
+      </p>
     </aside>
   </div>
 
+  <!-- Footer -->
   <footer>
     <div class="container links">
       <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
@@ -92,57 +100,58 @@
     <div class="container">© <span id="year"></span> Volvo Bets • Demo with virtual coins</div>
   </footer>
 
+  <!-- App Script -->
   <script>
-    const runners = [
-      
-// Global list so existing functions work
-let runners = [];
+    // Elements
+    const runnerRows = document.getElementById('runnerRows');
+    const betsEl     = document.getElementById('bets');
+    const stakeTotal = document.getElementById('stakeTotal');
+    const retTotal   = document.getElementById('retTotal');
+    const balEl      = document.getElementById('bal');
+    const matchTitle = document.getElementById('matchTitle');
+    const matchMeta  = document.getElementById('matchMeta');
 
-async function loadData(){
-  try{
-    const res = await fetch('data/matches.json', { cache: 'no-store' });
-    const matches = await res.json();
+    // State
+    let balance = Number(localStorage.vbBal || 1000);
+    let betSlip = [];
+    let runners = []; // populated from JSON
 
-    // Abhi simple: pehla match dikhao
-    const m = matches[0];
+    if (balEl) balEl.textContent = balance;
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Convert JSON -> runners format jo tumhari renderRunners() expect karti hai
-    runners = m.markets["Match Odds"].map(r => ({
-      name: r.runner, back: r.back, lay: r.lay
-    }));
+    // ========== DATA LOADING FROM JSON ==========
+    async function loadData(){
+      try{
+        const res = await fetch('data/matches.json', { cache: 'no-store' });
+        const matches = await res.json();
 
-    // Heading/meta update
-    const h2s = document.querySelectorAll('.event h2');
-    const metas = document.querySelectorAll('.event .meta');
-    if(h2s[0]) h2s[0].textContent = `${m.match} — Match Odds`;
-    if(metas[0]){
-      const t = new Date(m.start);
-      const time = t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      metas[0].textContent = `${m.sport} • Starts ${time} • In-Play available`;
+        // For now show the first match from JSON
+        const m = matches[0];
+
+        // Heading/meta
+        matchTitle.textContent = `${m.match} — Match Odds`;
+        const t = new Date(m.start);
+        const time = t.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        matchMeta.textContent = `${m.sport} • Starts ${time} • In-Play available`;
+
+        // Convert JSON -> current table format
+        runners = m.markets["Match Odds"].map(r => ({
+          name: r.runner, back: r.back, lay: r.lay
+        }));
+
+        renderRunners(runners);
+      }catch(err){
+        matchTitle.textContent = 'Failed to load match';
+        matchMeta.textContent  = 'Check data/matches.json';
+        console.error(err);
+      }
     }
 
-    // Table render (tumhari existing function)
-    renderRunners(runners);
-  }catch(err){
-    console.error('Error loading matches.json', err);
-  }
-}
+    // Auto refresh every 10s
+    loadData();
+    setInterval(loadData, 10000);
 
-// First load + auto refresh
-loadData();
-setInterval(loadData, 10000);
-</script>
-
-
-    const runnerRows = document.getElementById('runnerRows');
-    const betsEl = document.getElementById('bets');
-    const stakeTotal = document.getElementById('stakeTotal');
-    const retTotal = document.getElementById('retTotal');
-    const balEl = document.getElementById('bal');
-
-    let balance = Number(localStorage.vbBal||1000);
-    let betSlip = [];
-
+    // ========== RENDER TABLE + BETSLIP ==========
     function renderRunners(list){
       runnerRows.innerHTML = '';
       list.forEach((r,ri)=>{
@@ -184,7 +193,7 @@ setInterval(loadData, 10000);
         r += (b.stake*b.price)||0;
       });
       stakeTotal.textContent = s.toFixed(2);
-      retTotal.textContent = r.toFixed(2);
+      retTotal.textContent   = r.toFixed(2);
     }
 
     function updStake(i,v){ betSlip[i].stake = Number(v); renderBets(); }
@@ -198,10 +207,6 @@ setInterval(loadData, 10000);
       alert('Demo: Bets placed!');
       betSlip = []; renderBets();
     }
-
-    if(balEl) balEl.textContent = balance;
-    document.getElementById('year').textContent = new Date().getFullYear();
-    renderRunners(runners);
   </script>
 </body>
 </html>
