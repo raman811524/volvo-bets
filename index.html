@@ -3,89 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Volvo Bets — Exchange UI</title>
-  <meta name="description" content="23exch-style betting exchange front-end (demo with virtual coins)." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Volvo Bets — Exchange</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0b101a; --surface:#0f1625; --border:#1e2a3a; --muted:#98a4b3;
-      --brand:#0ea5e9; /* header accent */
-      --back:#4ea2ff; /* Betfair-like blue */
-      --lay:#f7a6c2;  /* Betfair-like pink */
-      --warn:#f59e0b; --ok:#10b981;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:'Inter',system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:#e5e7eb}
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1350px;margin:0 auto;padding:0 14px}
-
-    /* Topbar */
-    header{position:sticky;top:0;z-index:30;background:rgba(11,16,26,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
-    .top{display:flex;align-items:center;justify-content:space-between;height:64px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
-    .brand img{width:40px;height:40px;border-radius:50%}
-    .actions{display:flex;gap:10px;align-items:center}
-    .badge{border:1px solid var(--border);padding:6px 10px;border-radius:999px;color:#cbd5e1;font-size:12px}
-    .btn{padding:8px 14px;border-radius:10px;border:1px solid var(--border);background:#0f172a}
-    .btn.primary{background:var(--brand);border-color:var(--brand);color:#001018;font-weight:700}
-
-    /* Subnav */
-    .subnav{display:flex;gap:10px;align-items:center;height:48px}
-    .tab{padding:8px 12px;border-radius:10px;border:1px solid transparent;color:#cbd5e1}
-    .tab.active,.tab:hover{background:#0b1220;border-color:var(--border)}
-
-    /* Layout */
-    .layout{display:grid;grid-template-columns:240px 1fr 360px;gap:14px;padding:14px}
-    @media(max-width:1200px){.layout{grid-template-columns:1fr}}
-
-    .panel{background:var(--surface);border:1px solid var(--border);border-radius:14px}
-
-    /* Left sidebar */
-    .sidebar{padding:14px}
-    .sidebar h3{margin:0 0 10px}
-    .menu a{display:block;padding:10px;border-radius:10px;border:1px solid transparent}
-    .menu a.active,.menu a:hover{background:#0b1220;border-color:var(--border)}
-
-    /* Markets list + Market view */
-    .markets{display:grid;gap:14px}
-    .searchbar{display:flex;gap:10px;padding:14px}
-    .searchbar input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#0b1220;color:#e5e7eb}
-
-    .event{padding:14px}
-    .event h2{margin:0 0 6px;font-size:18px}
-    .event .meta{color:#cbd5e1;font-size:13px}
-
-    /* Runner odds grid */
-    table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    th,td{padding:8px}
-    th{font-weight:600;color:#cbd5e1}
-    tr{background:#0b1220;border:1px solid var(--border)}
-    .runner{display:flex;align-items:center;gap:10px}
-    .chip{font-size:11px;border:1px solid var(--border);padding:2px 6px;border-radius:999px;color:#cbd5e1}
-
-    .price{display:grid;place-items:center;min-width:78px;height:44px;border-radius:10px;border:1px solid var(--border);cursor:pointer;user-select:none}
-    .back1{background:rgba(78,162,255,.45)}
-    .back2{background:rgba(78,162,255,.3)}
-    .back3{background:rgba(78,162,255,.18)}
-    .lay1{background:rgba(247,166,194,.45)}
-    .lay2{background:rgba(247,166,194,.3)}
-    .lay3{background:rgba(247,166,194,.18)}
-    .price:hover{transform:translateY(-1px)}
-
-    /* Betslip */
-    .betslip{padding:14px;display:grid;gap:10px}
-    .betslip h3{margin:0 0 6px}
-    .bet{background:#0b1220;border:1px solid var(--border);border-radius:12px;padding:10px;display:grid;gap:8px}
-    .bet h4{margin:0;font-size:14px}
-    .row{display:flex;gap:8px}
-    .row input{flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:#0b1220;color:#e5e7eb}
-    .tag{font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid var(--border)}
-    .tag.back{background:rgba(78,162,255,.25)}
-    .tag.lay{background:rgba(247,166,194,.25)}
-    .total{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--border);padding-top:8px;margin-top:6px;color:#cbd5e1}
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
@@ -96,27 +16,25 @@
       </div>
       <div class="actions">
         <span class="badge">Balance: <strong id="bal">1000</strong> coins</span>
-        <button class="btn" onclick="deposit()">Add Coins</button>
-        <button class="btn primary">Login</button>
+        <a class="btn" href="account.html">Account</a>
+        <a class="btn primary" href="index.html">Exchange</a>
       </div>
     </div>
-    <div class="container subnav">
-      <a class="tab active" href="#">In‑Play</a>
-      <a class="tab" href="#">Today</a>
-      <a class="tab" href="#">Upcoming</a>
-      <a class="tab" href="#">All Sports</a>
+    <div class="container nav">
+      <a class="tab active" href="index.html">In-Play</a>
+      <a class="tab" href="markets.html">Markets</a>
+      <a class="tab" href="rules.html">Rules</a>
+      <a class="tab" href="responsible.html">Responsible Gaming</a>
     </div>
   </header>
 
   <div class="container layout">
-    <!-- LEFT: Sidebar -->
     <aside class="panel sidebar">
       <h3>Sports</h3>
       <nav class="menu">
         <a class="active" href="#">Cricket</a>
         <a href="#">Football</a>
         <a href="#">Tennis</a>
-        <a href="#">Basketball</a>
       </nav>
       <h3 style="margin-top:14px">Tournaments</h3>
       <div class="menu">
@@ -126,7 +44,6 @@
       </div>
     </aside>
 
-    <!-- CENTER: Market View -->
     <main class="panel markets">
       <div class="searchbar">
         <input type="search" placeholder="Search events or teams…" oninput="filterEvents(this.value)">
@@ -156,20 +73,26 @@
       </section>
     </main>
 
-    <!-- RIGHT: Bet Slip -->
     <aside class="panel betslip">
       <h3>Bet Slip</h3>
       <div id="bets"></div>
       <div class="total"><span>Total Stake</span><strong id="stakeTotal">0</strong></div>
       <div class="total"><span>Potential Return</span><strong id="retTotal">0</strong></div>
       <button class="btn primary" onclick="placeAll()">Place Bets (Demo)</button>
-      <p style="color:var(--muted);font-size:12px">Demo UI with virtual coins. Real-money systems require licensing, KYC, and compliance.
-      </p>
+      <p style="color:var(--muted);font-size:12px">Demo UI with virtual coins. Real‑money systems require licensing, KYC, and compliance.</p>
     </aside>
   </div>
 
+  <footer>
+    <div class="container links">
+      <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://t.me/" target="_blank" rel="noopener">Telegram</a>
+      <a href="mailto:contact@volvobets.com">Email</a>
+    </div>
+    <div class="container">© <span id="year"></span> Volvo Bets • Demo with virtual coins</div>
+  </footer>
+
   <script>
-    // Event + Runner mock
     const runners = [
       { name:'India', back:[1.84,1.83,1.82], lay:[1.86,1.88,1.90] },
       { name:'Pakistan', back:[2.10,2.08,2.06], lay:[2.14,2.16,2.18] },
@@ -182,7 +105,7 @@
     const retTotal = document.getElementById('retTotal');
     const balEl = document.getElementById('bal');
 
-    let balance = 1000;
+    let balance = Number(localStorage.vbBal||1000);
     let betSlip = [];
 
     function renderRunners(list){
@@ -198,10 +121,7 @@
       });
     }
 
-    function filterEvents(q){
-      // demo: no event list yet, keep for later
-      console.log('search:', q);
-    }
+    function filterEvents(q){ console.log('search:', q); }
 
     function addBet(index, side, price){
       const r = runners[index];
@@ -239,13 +159,13 @@
       const total = betSlip.reduce((x,b)=> x + (Number(b.stake)||0), 0);
       if(total<=0) return alert('Add stake.');
       if(total>balance) return alert('Not enough coins.');
-      balance -= total; balEl.textContent = balance;
+      balance -= total; localStorage.vbBal = balance; if(balEl) balEl.textContent = balance;
       alert('Demo: Bets placed!');
       betSlip = []; renderBets();
     }
 
-    function deposit(){ balance += 500; balEl.textContent = balance; }
-
+    if(balEl) balEl.textContent = balance;
+    document.getElementById('year').textContent = new Date().getFullYear();
     renderRunners(runners);
   </script>
 </body>
