@@ -1,5 +1,11 @@
 :root{
   --bg:#0b101a; --surface:#0f1625; --border:#1e2a3a; --muted:#98a4b3;
+  --brand:#2F6CF6;      /* logo blue */
+  --back:#2F6CF6;       /* Back boxes blue */
+  --lay:#FFA31A;        /* Lay boxes orange */
+}
+:root{
+  --bg:#0b101a; --surface:#0f1625; --border:#1e2a3a; --muted:#98a4b3;
   --brand:#0ea5e9; --back:#4ea2ff; --lay:#f7a6c2;
   --ok:#10b981; --warn:#f59e0b; --danger:#ef4444;
 }
@@ -50,4 +56,10 @@ tr{background:#0b1220;border:1px solid var(--border)}
 .tag.back{background:rgba(78,162,255,.25)} .tag.lay{background:rgba(247,166,194,.25)}
 .total{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--border);padding-top:8px;margin-top:6px;color:#cbd5e1}
 footer{padding:28px 14px;border-top:1px solid var(--border);color:#94a3b8;font-size:14px;text-align:center;margin-top:20px}
-.links a{padding:6px 10px;border:1px solid var(--border);border-radius:10px;margin-right:8px}
+.links a{padding:6px 10px;border:1px solid var(--border);border-radius:10px;margin-right:8px}:root{
+  --bg:#0b101a; --surface:#0f1625; --border:#1e2a3a; --muted:#98a4b3;
+  --brand:#2F6CF6;      /* logo blue */
+  --back:#2F6CF6;       /* Back boxes blue */
+  --lay:#FFA31A;        /* Lay boxes orange */
+}
+
