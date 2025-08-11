@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "sport": "Cricket",
+    "tournament": "Asia Cup",
+    "match": "India vs Pakistan",
+    "start": "2025-08-10T19:30:00",
+    "markets": {
+      "Match Odds": [
+        { "runner": "India", "back": [1.84, 1.83, 1.82], "Lay": [1.86, 1.88, 1.90] },
+        { "runner": "Pakistan", "back": [2.10, 2.08, 2.06], "Lay": [2.14, 2.16, 2.18] },
+        { "runner": "Draw", "back": [8.00, 7.80, 7.60], "Lay": [8.40, 8.60, 8.80] }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "sport": "Football",
+    "tournament": "La Liga",
+    "match": "Barcelona vs Real Madrid",
+    "start": "2025-08-10T22:00:00",
+    "markets": {
+      "Match Odds": [
+        { "runner": "Barcelona", "back": [1.50, 1.48, 1.46], "Lay": [1.52, 1.54, 1.56] },
+        { "runner": "Real Madrid", "back": [2.80, 2.78, 2.76], "Lay": [2.84, 2.86, 2.88] },
+        { "runner": "Draw", "back": [3.20, 3.18, 3.16], "Lay": [3.25, 3.28, 3.30] }
+      ]
+    }
+  }
+]
